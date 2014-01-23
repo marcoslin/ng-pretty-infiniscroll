@@ -1,0 +1,16 @@
+{
+    "name": "ngcoolscroll",
+    "version": "0.0.1",
+    "description": "Angular Infinity Scroll with Pretty Scrollbar",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Marcos Lin",
+    "license": "BSD-2-Clause",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-copy": "~0.4.1",
+        "grunt-bower-task": "~0.3.2",
+        "load-grunt-tasks": "~0.1.0"
+    }
+}

@@ -1,0 +1,4 @@
+# Ignore sourced libs
+bower_components/
+node_modules/
+
