@@ -1,26 +1,28 @@
 <html ng-app="webapp">
 
     <head>
-        <title>Standard Scroll</title>
-        <link rel="stylesheet" href="css/standard.css">
+        <title>Native Scrollbar</title>
+        <link rel="icon" type="image/png" href="images/favicon.ico">
+        <link rel="stylesheet" href="css/native.css">
     </head>
 
     
     <body>
-        <h1>Standard Scrollbar</h1>
+        <h1>Native Scrollbar</h1>
         <div class="container">
             Using <code>:hover</code> is easy to make scroll bar appear and disapper.  However,
             the transition effect is <a href="http://stackoverflow.com/questions/4576853/does-webkit-scrollbar-work-with-webkit-transition">not yet possible</a>,
             and displayed scrollbar takes place that will impact the layout of existing text.
         </div>
 
-        
-        
         <h2>Demo</h2>
         <div class="scrollable">
             <ul id="list-container">
             </ul>
         </div>
+        
+        <hr>
+        <a href="/">Back</a>
         
         <script type="text/javascript">
             var elem = document.getElementById('list-container');

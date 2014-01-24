@@ -1,18 +1,23 @@
 <html ng-app="webapp">
 
     <head>
-        <title>Cool Scroll</title>
+        <title>AngularJS Scrollbars</title>
+        <link rel="icon" type="image/png" href="images/favicon.ico">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/jquery.tinyscrollbar.css">
     </head>
 
     
     <body>
-        <h1>Cool Scroll</h1>
         <div ng-view></div>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>      
+        <script src="js/lib/jquery.tinyscrollbar.js"></script>
         
         <script src="js/lib/angular.js"></script>
         <script src="js/lib/angular-route.js"></script>
         <script src="js/app.js"></script>
+
     </body>
 
 </html>

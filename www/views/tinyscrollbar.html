@@ -1,0 +1,24 @@
+<h1>Tiny Scrollbar</h1>
+
+<h2>Demo</h2>
+<div id="tinyscrollbar1">
+    <!-- Define Scrollbar -->
+    <div class="scrollbar">
+        <div class="track">
+            <div class="thumb">
+                <div class="end"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Define View Section -->
+    <div class="viewport">
+        <div class="overview">
+            <ul>
+                <li ng-repeat="item in data" trigger-scrollbar>{{item}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr>
+<a href="#/home">Back</a>
