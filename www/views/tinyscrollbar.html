@@ -1,9 +1,9 @@
 <h1>Tiny Scrollbar</h1>
 
 <h2>Demo</h2>
-<div id="tinyscrollbar1">
+<div id="tinyscrollbar1" ng-mouseover="showScrollBar=true" ng-mouseleave="showScrollBar=false" ng-init="showScrollBar=false">
     <!-- Define Scrollbar -->
-    <div class="scrollbar">
+    <div class="scrollbar" ng-show="showScrollBar">
         <div class="track">
             <div class="thumb">
                 <div class="end"></div>

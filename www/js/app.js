@@ -1,6 +1,6 @@
 /*global angular */
 
-var app = angular.module("webapp", ['ngRoute']);
+var app = angular.module("webapp", ['ngRoute','ngAnimate']);
 
 /* ------------
    ROUTE CONFIG

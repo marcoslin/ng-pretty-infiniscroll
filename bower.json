@@ -2,8 +2,9 @@
     "name": "ngcoolscroll",
     "version": "0.0.1",
     "dependencies": {
-        "angular": "~1.2.9",
-        "angular-route": "~1.2.9",
+        "angular": "1.2.9",
+        "angular-route": "1.2.9",
+        "angular-animate": "1.2.9",
         "ngInfiniteScroll": "~1.0.0"
     },
     "devDependencies": {
