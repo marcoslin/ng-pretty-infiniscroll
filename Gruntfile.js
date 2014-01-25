@@ -37,11 +37,22 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        watch: {
+            options: {
+                spawn: true,
+                livereload: true
+            },
+            devel: {
+                files: ['www/**/*'],
+                tasks: []
+            }
+        },
         connect: {
             devel: {
                 options: {
-                    port: 8889,
+                    port: 8886,
                     base: 'www',
+                    livereload: true,
                     keepalive: true,
                     open: true
                 }
@@ -51,5 +62,5 @@ module.exports = function (grunt) {
     
     /* BASIC TASKS */
     grunt.registerTask('setup', ['bower:setup', 'copy:setup-www']);
-    grunt.registerTask('devel', ['connect:devel']);
+    grunt.registerTask('devel', ['connect:devel', 'watch:devel']);
 };
