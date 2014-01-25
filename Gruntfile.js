@@ -15,16 +15,24 @@ module.exports = function (grunt) {
             "setup-www": {
                 files: [
                     {
+                        expand: true, cwd: "bower_components/jquery/",
+                        src: 'jquery.js', dest: "www/js/lib/"
+                    },
+                    {
                         expand: true, cwd: "bower_components/angular/",
-                        src: 'angular.js', dest: "src/www/js/lib/"
+                        src: 'angular.js', dest: "www/js/lib/"
                     },
                     {
                         expand: true, cwd: "bower_components/angular-route/",
-                        src: 'angular-route.js', dest: "src/www/js/lib/"
+                        src: 'angular-route.js', dest: "www/js/lib/"
+                    },
+                    {
+                        expand: true, cwd: "bower_components/angular-animate/",
+                        src: 'angular-animate.js', dest: "www/js/lib/"
                     },
                     {
                         expand: true, cwd: "bower_components/ngInfiniteScroll/",
-                        src: 'ng-infinite-scroll.js', dest: "src/www/js/lib/"
+                        src: 'ng-infinite-scroll.js', dest: "www/js/lib/"
                     }
                 ]
             }
