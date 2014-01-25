@@ -36,9 +36,20 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        connect: {
+            devel: {
+                options: {
+                    port: 8889,
+                    base: 'www',
+                    keepalive: true,
+                    open: true
+                }
+            }
         }
     });
     
     /* BASIC TASKS */
     grunt.registerTask('setup', ['bower:setup', 'copy:setup-www']);
+    grunt.registerTask('devel', ['connect:devel']);
 };
