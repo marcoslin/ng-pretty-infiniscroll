@@ -1,11 +1,11 @@
 /* Tiny Scrollbar */
 #tinyscrollbar1 {
-    width: 160px;
+    width: 120px;
     margin: 10px 0 10px;
 }
 
 #tinyscrollbar1 .viewport {
-    width: 160px;
+    width: 120px;
     height: 200px;
     overflow: hidden;
     position: relative;
@@ -26,7 +26,8 @@
     background: transparent url(../images/bg-scrollbar-track-y.png) no-repeat 0 0; 
     /* position: relative; */
     position: absolute;
-    left: 155px;
+    /* left is 120px because it's 110px of viewport + 10px of table cell padding */
+    left: 130px;
     background-position: 0 0;
     float: right;
     width: 15;
@@ -77,8 +78,8 @@ AngularJS Animation
 */
 .scrollbar.ng-hide-add,
 .scrollbar.ng-hide-remove {
-    -webkit-transition:0.5s linear all;
-    transition:0.5s linear all;
+    -webkit-transition:0.3s linear all;
+    transition:0.3s linear all;
     
     /* remember to add this */
     display:block!important;

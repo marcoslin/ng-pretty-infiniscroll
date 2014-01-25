@@ -27,6 +27,7 @@ mod.directive('infiniteScroll', [
           });
         }
         handler = function() {
+          console.log("infiniteScroll.handler called");
           var elementBottom, remaining, shouldScroll, windowBottom;
           windowBottom = $window.height() + $window.scrollTop();
           elementBottom = elem.offset().top + elem.height();

@@ -1,24 +1,72 @@
 <h1>Tiny Scrollbar</h1>
 
 <h2>Demo</h2>
-<div id="tinyscrollbar1" ng-mouseover="showScrollBar=true" ng-mouseleave="showScrollBar=false" ng-init="showScrollBar=false">
-    <!-- Define Scrollbar -->
-    <div class="scrollbar" ng-show="showScrollBar">
-        <div class="track">
-            <div class="thumb">
-                <div class="end"></div>
+
+<table cellpadding="10"> 
+    <tr>
+        <td>
+            <div id="tinyscrollbar1" ng-mouseover="showScrollBar=true" ng-mouseleave="showScrollBar=false" ng-init="showScrollBar=false">
+                <!-- Define Scrollbar -->
+                <div class="scrollbar" ng-show="showScrollBar">
+                    <div class="track">
+                        <div class="thumb">
+                            <div class="end"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Define View Section -->
+                <div class="viewport">
+                    <div class="overview" infinite-scroll='loadMore()' infinite-scroll-distance='1'>
+                        <!--
+                        <ul>
+                            <li ng-repeat="item in data" trigger-scrollbar>{{item}}</li>
+                        </ul>
+                        -->
+                        <div class="item" ng-repeat="item in data" trigger-scrollbar>{{item}}</div>
+                        <div id="last-item">[Load More]</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <!-- Define View Section -->
-    <div class="viewport">
-        <div class="overview">
-            <ul>
-                <li ng-repeat="item in data" trigger-scrollbar>{{item}}</li>
-            </ul>
-        </div>
-    </div>
-</div>
+        </td>
+        <td>
+            <div class="container">
+                <label for="viewportOTop">viewportOTop:</label>
+                <input id="viewportOTop">
+                <label for="viewPortBottom">viewPortBottom:</label>
+                <input id="viewPortBottom">
+                <label for="viewportSize">viewportSize:</label>
+                <input id="viewportSize">
+                <br>
+
+                <label for="overviewOTop">overviewOTop:</label>
+                <input id="overviewOTop">
+                <label for="overviewSize">overviewSize:</label>
+                <input id="overviewSize">
+                <br>
+                
+                <label for="lastItemOTop">lastItemOTop:</label>
+                <input id="lastItemOTop">
+                <label for="lastItemTop">lastItemTop:</label>
+                <input id="lastItemTop">
+                <label for="lastItemSize">lastItemSize:</label>
+                <input id="lastItemSize">
+                <br>
+                    
+
+                
+                
+                
+            </div>
+            <div class="container">
+                <button type="button" ng-click="loadMore()">Load Data</button>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
 
 <hr>
 <a href="#/home">Back</a>

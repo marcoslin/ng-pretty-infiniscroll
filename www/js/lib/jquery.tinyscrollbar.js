@@ -1,5 +1,6 @@
-;(function (factory)
-{
+/*globals define*/
+(function (factory) {
+    'use strict';
     if (typeof define === 'function' && define.amd)
     {
         // AMD. Register as an anonymous module.
@@ -30,13 +31,21 @@
     };
 
     $.fn.tinyscrollbar = function(params)
-    {
-        var options = $.extend( {}, $.tiny.scrollbar.options, params );
+    {        
+        if ( $(this).data().tsb ) {
+            var tsb_instance = $(this).data().tsb;
+            tsb_instance.update();
+            console.log("tinyscrollbar refreshed");
+        } else {
+            var options = $.extend( {}, $.tiny.scrollbar.options, params );
 
-        this.each(function()
-        {
-            $(this).data('tsb', new Scrollbar( $( this ), options ) );
-        });
+            this.each(function()
+            {
+                $(this).data('tsb', new Scrollbar( $( this ), options ) );
+            });
+            
+            console.log("tinyscrollbar initalized");
+        }
 
         return this;
     };
@@ -70,6 +79,8 @@
 
         ,   sizeLabel = isHorizontal ? "width" : "height"
         ,   posiLabel = isHorizontal ? "left" : "top"
+        
+        ,   viewPortBottom = 0
         ;
 
         function initialize()
@@ -89,6 +100,8 @@
             trackSize       = options.trackSize || viewportSize;
             thumbSize       = Math.min(trackSize, Math.max(0, (options.thumbSize || (trackSize * contentRatio))));
             trackRatio      = options.thumbSize ? (contentSize - viewportSize) / (trackSize - thumbSize) : (contentSize / trackSize);
+            
+            viewPortBottom  = viewportSize + parseInt($viewport.offset().top, 10);
 
             $scrollbar.toggleClass("disable", contentRatio >= 1);
 
@@ -107,6 +120,8 @@
             }
 
             setSize();
+            
+            console.log("tinyscrollbar update called", viewPortBottom);
         };
 
         function setSize()
@@ -174,6 +189,45 @@
             }
         }
 
+        /* ################
+        MOVE
+        */
+        function moveScroll(thum_pos, source) {
+
+            $thumb.css(posiLabel, thum_pos);
+            $overview.css(posiLabel, -contentPosition);
+            
+            var lastItemOffsetTop = parseInt($('#last-item').offset().top, 10);
+            if (lastItemOffsetTop && lastItemOffsetTop < viewPortBottom) {
+                console.log("SCROLL");
+                $(window).trigger('scroll');
+            }
+            
+            console.log("thum_pos: " + posiLabel + "=" + thum_pos);
+            /*
+            
+            console.log("overview: " + posiLabel + "=" + -contentPosition);
+            */
+            $('#viewportOTop').val($('.viewport').offset().top);
+            $('#viewPortBottom').val(viewPortBottom);
+            $('#viewportSize').val(viewportSize);
+            
+            $('#overviewOTop').val($('.overview').offset().top);
+            $('#overviewSize').val($overview.height());
+            
+            // $('#lastItemOTop').val($('#last-item').offset().top);
+            $('#lastItemOTop').val(lastItemOffsetTop);
+            $('#lastItemTop').val($('#last-item').position().top);
+            $('#lastItemSize').val($('#last-item').height());
+            /*
+            var end_pos = contentSize - viewportSize,
+                end_ratio = contentPosition / end_pos;
+            console.log("[" + source + "] now: " + contentPosition + "; end: " + end_pos + "; ratio: " + end_ratio);
+            */
+
+        }
+        
+        
         function wheel(event)
         {
             if(contentRatio < 1)
@@ -184,10 +238,13 @@
 
                 contentPosition -= wheelSpeedDelta * options.wheelSpeed;
                 contentPosition = Math.min((contentSize - viewportSize), Math.max(0, contentPosition));
-
+                
+                /*
                 $thumb.css(posiLabel, contentPosition / trackRatio);
                 $overview.css(posiLabel, -contentPosition);
-
+                */
+                moveScroll(contentPosition / trackRatio, "wheel");
+                
                 if(options.wheelLock || (contentPosition !== (contentSize - viewportSize) && contentPosition !== 0))
                 {
                     eventObject = $.event.fix(eventObject);
@@ -211,8 +268,11 @@
                 thumbPositionNew = Math.min((trackSize - thumbSize), Math.max(0, thumbPosition + thumbPositionDelta));
                 contentPosition  = thumbPositionNew * trackRatio;
 
+                /*
                 $thumb.css(posiLabel, thumbPositionNew);
                 $overview.css(posiLabel, -contentPosition);
+                */
+                moveScroll(thumbPositionNew, "drag");
             }
         }
 
