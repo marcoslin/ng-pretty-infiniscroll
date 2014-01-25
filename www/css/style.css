@@ -6,3 +6,6 @@ input {
     margin-bottom: 5px;
 }
 
+#last-item {
+    background: rgba(0, 0, 0, 0.2);
+}
