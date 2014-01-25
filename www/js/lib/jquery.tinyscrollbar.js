@@ -27,6 +27,7 @@
             ,   scrollInvert : false  // Enable invert style scrolling
             ,   trackSize    : false  // set the size of the scrollbar to auto or a fixed number.
             ,   thumbSize    : false  // set the size of the thumb to auto or a fixed number.
+            ,   minThumSize  : 15     // set the minimum size of thum
         }
     };
 
@@ -34,7 +35,7 @@
     {        
         if ( $(this).data().tsb ) {
             var tsb_instance = $(this).data().tsb;
-            tsb_instance.update();
+            tsb_instance.update('relative');
             console.log("tinyscrollbar refreshed");
         } else {
             var options = $.extend( {}, $.tiny.scrollbar.options, params );
@@ -98,7 +99,7 @@
             contentSize     = $overview[0]['scroll'+ sizeLabelCap];
             contentRatio    = viewportSize / contentSize;
             trackSize       = options.trackSize || viewportSize;
-            thumbSize       = Math.min(trackSize, Math.max(0, (options.thumbSize || (trackSize * contentRatio))));
+            thumbSize       = Math.min(trackSize, Math.max(options.minThumSize, (options.thumbSize || (trackSize * contentRatio))));
             trackRatio      = options.thumbSize ? (contentSize - viewportSize) / (trackSize - thumbSize) : (contentSize / trackSize);
             
             viewPortBottom  = viewportSize + parseInt($viewport.offset().top, 10);
@@ -120,7 +121,7 @@
             }
 
             setSize();
-            
+            logUpdate();
             console.log("tinyscrollbar update called", viewPortBottom);
         };
 
@@ -190,24 +191,10 @@
         }
 
         /* ################
-        MOVE
+        Update Log
         */
-        function moveScroll(thum_pos, source) {
-
-            $thumb.css(posiLabel, thum_pos);
-            $overview.css(posiLabel, -contentPosition);
-            
+        function logUpdate() {
             var lastItemOffsetTop = parseInt($('#last-item').offset().top, 10);
-            if (lastItemOffsetTop && lastItemOffsetTop < viewPortBottom) {
-                console.log("SCROLL");
-                $(window).trigger('scroll');
-            }
-            
-            console.log("thum_pos: " + posiLabel + "=" + thum_pos);
-            /*
-            
-            console.log("overview: " + posiLabel + "=" + -contentPosition);
-            */
             $('#viewportOTop').val($('.viewport').offset().top);
             $('#viewPortBottom').val(viewPortBottom);
             $('#viewportSize').val(viewportSize);
@@ -224,7 +211,25 @@
                 end_ratio = contentPosition / end_pos;
             console.log("[" + source + "] now: " + contentPosition + "; end: " + end_pos + "; ratio: " + end_ratio);
             */
+        }
+        
+        function moveScroll(thum_pos, source) {
 
+            $thumb.css(posiLabel, thum_pos);
+            $overview.css(posiLabel, -contentPosition);
+            
+            var lastItemOffsetTop = parseInt($('#last-item').offset().top, 10);
+            if (lastItemOffsetTop && lastItemOffsetTop < viewPortBottom) {
+                console.log("SCROLL");
+                $(window).trigger('scroll');
+            }
+            
+            console.log("thum_pos: " + posiLabel + "=" + thum_pos);
+            /*
+            
+            console.log("overview: " + posiLabel + "=" + -contentPosition);
+            */
+            logUpdate();
         }
         
         
