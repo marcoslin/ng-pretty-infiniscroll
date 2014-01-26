@@ -16,7 +16,7 @@
                 </div>
                 <!-- Define View Section -->
                 <div class="viewport">
-                    <div class="overview" infinite-scroll='loadMore()' infinite-scroll-distance='1'>
+                    <div class="overview" infinite-scroll='loadMore()'>
                         <!--
                         <ul>
                             <li ng-repeat="item in data" trigger-scrollbar>{{item}}</li>
@@ -40,6 +40,8 @@
 
                 <label for="overviewOTop">overviewOTop:</label>
                 <input id="overviewOTop">
+                <label for="overviewPos">overviewPos:</label>
+                <input id="overviewPos">
                 <label for="overviewSize">overviewSize:</label>
                 <input id="overviewSize">
                 <br>
@@ -51,11 +53,14 @@
                 <label for="lastItemSize">lastItemSize:</label>
                 <input id="lastItemSize">
                 <br>
-                    
+                
+                <label for="thumPos">thumPos:</label>
+                <input id="thumPos">
+                <label for="thumSize">thumSize:</label>
+                <input id="thumSize">
+                <label for="trackRatio">trackRatio:</label>
+                <input id="trackRatio">
 
-                
-                
-                
             </div>
             <div class="container">
                 <button type="button" ng-click="loadMore()">Load Data</button>

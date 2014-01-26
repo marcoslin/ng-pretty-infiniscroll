@@ -82,6 +82,7 @@
         ,   posiLabel = isHorizontal ? "left" : "top"
         
         ,   viewPortBottom = 0
+        ,   scrollEnabled = true // Flag used to disable scroll until this.update is called.
         ;
 
         function initialize()
@@ -100,7 +101,15 @@
             contentRatio    = viewportSize / contentSize;
             trackSize       = options.trackSize || viewportSize;
             thumbSize       = Math.min(trackSize, Math.max(options.minThumSize, (options.thumbSize || (trackSize * contentRatio))));
-            trackRatio      = options.thumbSize ? (contentSize - viewportSize) / (trackSize - thumbSize) : (contentSize / trackSize);
+            trackRatio      = (contentSize - viewportSize) / (trackSize - thumbSize);
+            
+            /*
+            For some reason, original formula for trackRation does not work:
+            trackRatio = options.thumbSize ? (contentSize - viewportSize) / (trackSize - thumbSize) : (contentSize / trackSize);
+            
+            When many pages are loaded, the scrolling starts to slowly ends before the last item, to the point that last item
+            no longer show even if thum reaches the end of the track.
+            */
             
             viewPortBottom  = viewportSize + parseInt($viewport.offset().top, 10);
 
@@ -122,6 +131,9 @@
 
             setSize();
             logUpdate();
+            
+            // Re-enable triggering of scroll event disabled in moveScroll()
+            scrollEnabled = true;
             console.log("tinyscrollbar update called", viewPortBottom);
         };
 
@@ -193,19 +205,26 @@
         /* ################
         Update Log
         */
-        function logUpdate() {
+        function logUpdate(thum_pos) {
             var lastItemOffsetTop = parseInt($('#last-item').offset().top, 10);
             $('#viewportOTop').val($('.viewport').offset().top);
             $('#viewPortBottom').val(viewPortBottom);
             $('#viewportSize').val(viewportSize);
             
             $('#overviewOTop').val($('.overview').offset().top);
+            $('#overviewPos').val(-contentPosition);
             $('#overviewSize').val($overview.height());
             
             // $('#lastItemOTop').val($('#last-item').offset().top);
             $('#lastItemOTop').val(lastItemOffsetTop);
             $('#lastItemTop').val($('#last-item').position().top);
             $('#lastItemSize').val($('#last-item').height());
+            
+            $('#thumPos').val(thum_pos);
+            $('#thumSize').val(thumbSize);
+            $('#trackRatio').val(trackRatio);
+            
+            
             /*
             var end_pos = contentSize - viewportSize,
                 end_ratio = contentPosition / end_pos;
@@ -219,17 +238,19 @@
             $overview.css(posiLabel, -contentPosition);
             
             var lastItemOffsetTop = parseInt($('#last-item').offset().top, 10);
-            if (lastItemOffsetTop && lastItemOffsetTop < viewPortBottom) {
+            if (scrollEnabled && lastItemOffsetTop && lastItemOffsetTop < viewPortBottom) {
+                // Disable triggering of scroll event, allowing update to recalc scroller which will enable it again
+                scrollEnabled = false;
                 console.log("SCROLL");
                 $(window).trigger('scroll');
             }
             
-            console.log("thum_pos: " + posiLabel + "=" + thum_pos);
-            /*
             
+            /*
+            console.log("thum_pos: " + posiLabel + "=" + thum_pos);
             console.log("overview: " + posiLabel + "=" + -contentPosition);
             */
-            logUpdate();
+            logUpdate(thum_pos);
         }
         
         
