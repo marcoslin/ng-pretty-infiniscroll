@@ -1,11 +1,20 @@
 // Gruntfile
 /*jslint devel: true, node: true, white:true */
+'use strict';
 
 module.exports = function (grunt) {
-    'use strict';
+    // Load all grunt tasks
     require('load-grunt-tasks')(grunt);
     
+    // Configuration Variables
+    var configuration = {
+        hostname: "localhost",
+        port: 8886
+    };
+    
+    // Start configuring grunt
     grunt.initConfig({
+        conf: configuration,
         bower: {
             setup: {
                 options: { install: true, copy: false }
@@ -37,30 +46,35 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        watch: {
+        express: {
             options: {
-                spawn: true,
-                livereload: true
+                port: "<%= conf.port %>",
+                hostname: "<%= conf.hostname %>"
             },
-            devel: {
-                files: ['www/**/*'],
-                tasks: []
+            livereload : {
+                options: {
+                    livereload: true,
+                    bases: ['www']
+                }
             }
         },
-        connect: {
+        open: {
             devel: {
-                options: {
-                    port: 8886,
-                    base: 'www',
-                    livereload: true,
-                    keepalive: true,
-                    open: true
-                }
+                url: "http://<%= conf.hostname %>:<%= conf.port %>/"
             }
         }
     });
     
     /* BASIC TASKS */
     grunt.registerTask('setup', ['bower:setup', 'copy:setup-www']);
-    grunt.registerTask('devel', ['connect:devel', 'watch:devel']);
+    //grunt.registerTask('devel', ['connect:devel', 'watch:dev']);
+    grunt.registerTask('devel', [
+        'express:livereload', 'open', 'watch'
+    ]);
+    
+    /* Dummy task */
+    grunt.registerTask('dummy', 'Just print a message', function () {
+        grunt.log.write("Dummy task called.");
+    });
+    
 };
