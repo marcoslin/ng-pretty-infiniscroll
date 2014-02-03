@@ -94,4 +94,64 @@ app.controller("DataController", ['$scope', 'DataSimple', '$log', function ($sco
     
     $scope.loadMore();
     
+    // Scrollbar related.  Move to directive later
+    var m_over, m_down;
+    $scope.showScrollBar = false;
+    
+    function DisplayScrollbar() {
+        if (m_over) {
+            if (!$scope.showScrollBar) {
+                $scope.showScrollBar = true;
+            }
+        } else {
+            if (!m_down) {
+            if ($scope.showScrollBar) {
+                $scope.showScrollBar = false;
+            }
+            }
+        }
+    }
+    
+    $scope.trigger_m_down = function (is_m_down) {
+        // 
+        $log.log("trigger_m_down: ", is_m_down);
+        if (is_m_down && m_over) {
+            m_down = true;
+        } else {
+            m_down = false;
+        }
+        
+        // If mouse up and no longer mouse over, hide scrollbar
+        if (!is_m_down && !m_over) {
+            $scope.showScrollBar = false;
+        }
+    };
+    
+    $scope.trigger_m_over = function (is_m_over) {
+        // 
+        $log.log("trigger_m_over: ", is_m_over);
+        m_over = is_m_over;
+        
+        if (m_over) {
+            $scope.showScrollBar = true;
+        } else if (!m_over && !m_down) {
+            $scope.showScrollBar = false;
+        } 
+    };
+    
+    function documentMouseListener(event) {
+        console.log("document mouseup");
+        m_down = false;
+        if (!m_over && $scope.showScrollBar) {
+            $scope.$apply(function () {
+                $scope.showScrollBar = false;
+            });
+        }
+    };
+    
+    document.documentElement.addEventListener('mouseup', documentMouseListener);
+    $scope.$on("$destroy", function () {
+        document.documentElement.removeEventListener('mouseup', documentMouseListener);
+    });
+    
 }]);

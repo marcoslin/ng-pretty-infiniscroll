@@ -5,7 +5,7 @@
 <table cellpadding="10"> 
     <tr>
         <td>
-            <div id="tinyscrollbar1" ng-mouseover="showScrollBar=true" ng-mouseleave="showScrollBar=false" ng-init="showScrollBar=false">
+            <div id="tinyscrollbar1" ng-mouseover="trigger_m_over(true)" ng-mouseleave="trigger_m_over(false)" ng-mousedown="trigger_m_down(true)" ng-mouseup="trigger_m_down(false)">
                 <!-- Define Scrollbar -->
                 <div class="scrollbar" ng-show="showScrollBar">
                     <div class="track">
